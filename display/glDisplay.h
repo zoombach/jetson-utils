@@ -136,6 +136,8 @@ public:
 	 */
 	void SetTitle( const char* str );
 
+	static void SetWidthHeight(uint32_t width, uint32_t height);
+
 	/**
 	 * Set the background color.
 	 * @param r background RGBA color, red component (0.0-1.0f)

@@ -28,6 +28,9 @@
 // DEFAULT_TITLE
 const char* glDisplay::DEFAULT_TITLE = "NVIDIA Jetson";
 
+uint32_t widthSetting = 640;
+uint32_t heightSetting = 480;
+
 
 // Constructor
 glDisplay::glDisplay()
@@ -151,9 +154,11 @@ bool glDisplay::initWindow()
 	}
 
 	// retrieve screen info
-	const int screenIdx   = DefaultScreen(mDisplayX);
-	const int screenWidth = DisplayWidth(mDisplayX, screenIdx);
-	const int screenHeight = DisplayHeight(mDisplayX, screenIdx);
+	// const int screenIdx   = DefaultScreen(mDisplayX);
+	// const int screenWidth = DisplayWidth(mDisplayX, screenIdx);
+	// const int screenHeight = DisplayHeight(mDisplayX, screenIdx);
+	const int screenWidth = widthSetting;
+	const int screenHeight = heightSetting;
 	
 	printf(LOG_GL "glDisplay -- X screen %i resolution:  %ix%i\n", screenIdx, screenWidth, screenHeight);
 	
@@ -239,6 +244,12 @@ bool glDisplay::initWindow()
 void glDisplay::SetTitle( const char* str )
 {
 	XStoreName(mDisplayX, mWindowX, str);
+}
+
+void glDisplay::SetWidthHeight(uint32_t width, uint32_t height)
+{
+	widthSetting = width;
+	heightSetting = height;
 }
 
 // initGL
