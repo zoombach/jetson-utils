@@ -111,7 +111,7 @@ public:
 	 *
 	 * @returns A pointer to the created gstCamera device, or NULL if there was an error.
 	 */
-	static gstCamera* Create( uint32_t width, uint32_t height, const char* camera=NULL );
+	static gstCamera* Create( uint32_t width, uint32_t height, std::string etr, const char* camera=NULL );
 	
 	/**
 	 * Release the camera interface and resources.
@@ -292,6 +292,7 @@ private:
 	uint32_t mHeight;
 	uint32_t mDepth;
 	uint32_t mSize;
+	std::string mExposureTimeRange;
 
 	static const uint32_t NUM_RINGBUFFERS = 16;
 	

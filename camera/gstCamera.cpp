@@ -419,7 +419,7 @@ bool gstCamera::buildLaunchStr( gstCameraSrc src )
 		if( src == GST_SOURCE_NVCAMERA )
 			ss << "nvcamerasrc fpsRange=\"30.0 30.0\" ! video/x-raw(memory:NVMM), width=(int)" << mWidth << ", height=(int)" << mHeight << ", format=(string)NV12 ! nvvidconv flip-method=" << flipMethod << " ! "; //'video/x-raw(memory:NVMM), width=(int)1920, height=(int)1080, format=(string)I420, framerate=(fraction)30/1' ! ";
 		else if( src == GST_SOURCE_NVARGUS )
-			ss << "nvarguscamerasrc sensor-id=" << mSensorCSI << " ! video/x-raw(memory:NVMM), width=(int)" << mWidth << ", height=(int)" << mHeight << ", framerate=30/1, format=(string)NV12 ! nvvidconv flip-method=" << flipMethod << " ! ";
+			ss << "nvarguscamerasrc sensor-id=" << mSensorCSI << " exposuretimerange=" << "\"" << mExposureTimeRange << "\"" << " ! video/x-raw(memory:NVMM), width=(int)" << mWidth << ", height=(int)" << mHeight << ", framerate=30/1, format=(string)NV12 ! nvvidconv flip-method=" << flipMethod << " ! ";
 		
 		ss << "video/x-raw ! appsink name=mysink";
 	}
@@ -483,7 +483,7 @@ bool gstCamera::parseCameraStr( const char* camera )
 
 
 // Create
-gstCamera* gstCamera::Create( uint32_t width, uint32_t height, const char* camera )
+gstCamera* gstCamera::Create( uint32_t width, uint32_t height, std::string etr, const char* camera )
 {
 	if( !gstreamerInit() )
 	{
@@ -503,6 +503,7 @@ gstCamera* gstCamera::Create( uint32_t width, uint32_t height, const char* camer
 	cam->mHeight     = height;
 	cam->mDepth      = cam->csiCamera() ? 12 : 24;	// NV12 or RGB
 	cam->mSize       = (width * height * cam->mDepth) / 8;
+	cam->mExposureTimeRange = etr;
 
 	if( !cam->init(GST_SOURCE_NVARGUS) )
 	{
