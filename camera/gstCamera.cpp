@@ -429,7 +429,8 @@ bool gstCamera::buildLaunchStr( gstCameraSrc src )
 		ss << "video/x-raw, width=(int)" << mWidth << ", height=(int)" << mHeight << ", "; 
 		
 	#if NV_TENSORRT_MAJOR >= 5
-		ss << "format=UYVY ! videoconvert ! video/x-raw, format=RGB ! videoconvert !";
+		ss << "format=UYVY ! videoconvert ! video/x-raw, format=RGB ! videoflip method=rotate-180 ! videoconvert !"; // for AR0330
+		//ss << "format=YUY2 ! videoconvert ! video/x-raw, format=RGB ! videoflip method=rotate-180 ! videoconvert !"; // for USB
 	#else
 		ss << "format=RGB ! videoconvert ! video/x-raw, format=RGB ! videoconvert !";
 	#endif
